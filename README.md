@@ -1,20 +1,20 @@
 Algorithmic Optimizations of Boston's Public Bus System
 =======================
 
-Contributors: Adrian Law (alaw), Mark Bestavros (markbest),  Tyrone Hou (tyroneh)
+#### Contributors: Adrian Law (alaw), Mark Bestavros (markbest),  Tyrone Hou (tyroneh)
 
-##Introduction and Motivation
+## Introduction and Motivation
 
 Through various personal experiences as well as a plurality of opinion from the media and the general public, we know that Boston's public bus system is in dire need of improvement. Buses are frequently late, trips take a long time, and the system is generally unreliable and inefficient. We want to take steps to change that with this project by applying big-data techniques and algorithms to existing transit data (among other things) and developing approaches to optimize the efficiency and effectiveness of Boston's bus system.
 
-##Goals for the Project
+## Goals for the Project
 We have outlined two optimizations we wish to pursue with our project:
 * Optimize access to and coverage of public transportation by moving existing stops along routes
 * Determine a stable bus schedule given information about traffic (Google Maps API/NextBus) and determine optimum bus allocation for maximum efficiency and performance on all of Boston's bus routes
   
 
   
-##Optimization Algorithms  
+## Optimization Algorithms  
   
 1. **Bus station placement optimization**: The routes that run through metropolitan Boston distribute stops across the city according to a variety of considerations. Ideally stop placement would take into account geographic population density and reduce the distance and amount of time it takes for a person to reach the closest bus stop. We use the k-means clustering algorithm to generate means corresponding to residential properties in Boston, and use those means to derive new optimal bus stop locations along a route. To ensure that the means lie along the original bus route, we first project all residential areas within 0.5 km of a route to the closest point on the route. We then map these points into a one dimensional space so that the k-means will only move means along the route, then map the means back into two dimensional space to get the locations of the optimal bus stops.
 
@@ -25,9 +25,9 @@ We have outlined two optimizations we wish to pursue with our project:
 Total latency is simplified in that inter-stop distance is not calculated; rather, latency is the average interarrival time (completion time / k) multiplied by n, where n is the number of stops and k is the number of buses. Inefficiency can be measured by the total area of intersection of k normal distributions multiplied by the number of buses. Output in the collection OptimumAllocation stores the optimal number of buses for each route.
 
 
-##Analysis of Optimizations
+## Analysis of Optimizations
 
-####Stop Placement
+#### Stop Placement
 
 ![Sample Map of Route Coverage](https://raw.githubusercontent.com/tyronehou/course-2016-fal-proj/master/alaw_markbest_tyroneh/poster/mapSampleCoverage.png)
 
@@ -37,7 +37,7 @@ We ran our algorithm on bus stops along Route 39: (Forest Hills Station - Back B
 
 However, our algorithm did not take into account cases when the spread of residential areas near to a route was scarce. For example, many bus routes extending past the metropolitan Boston area had a very low distribution of residential points. This would bias our algorithm to shift most of the bus stops inwards, leaving the outer routes with no stops. Additionally, we want to minimize the amount of travel time for each rider, as well increase the connectivity of the bus system to other modes of public transit, e.g. the T and Hubway. Thus we would like to run our algorithm on weighted data points from commercial properties, T stop and Hubway station locations in Boston.
 
-####Bus Allocation
+#### Bus Allocation
 
 ![Optimal Allocation Graph](https://raw.githubusercontent.com/tyronehou/course-2016-fal-proj/master/alaw_markbest_tyroneh/poster/optimalAllocation.png)
 
@@ -45,13 +45,13 @@ The results we found from the optimization algorithm did consistently correlate 
 
 However, our algorithm also consistently under-allocates the number of buses per route across all routes. The total number of buses that the algorithm chose to allocate was 401, nearly half as many as the actual active number of buses running on MBTA’s Boston routes (around 800). This suggests that our algorithm has shortfalls as a heuristic and should take into account more factors that we did not consider.
 
-##Conclusions and Future Work
+## Conclusions and Future Work
 
 Though the datasets we produced as part of our analysis are interesting and generally seem to fit the characteristics of the bus system, there are certainly a few things that can be improved upon in future work, as mentioned in the analysis sections above. Expanding our datasets to include commercial data in addition to residential data would go a long way towards improving our stop placement analysis analysis to more accurately reflect how many people actually use the public bus system: to travel to and from work. Additionally, many routes expand beyond the scope of our current datasets, so including more data in general beyond the core neighborhoods of Boston, Cambridge, Brookline, and Somerville would also be a prudent next step. Finally, further study of the factors behind bus stop allocation is certainly warranted, given the noted discrepancy between our analysis and the actual allocations.
 
 Looking forward, it's natural to ask how these optimizations could be applied in the real world. Unfortunately, there are some practical barriers that make the application of this study difficult--specifically, politics. This is much more of an issue for the stop placement optimization: the [politics](https://en.wikipedia.org/wiki/NIMBY) and cost involved with moving one bus stop--let alone every single one in the city--is absurd. Though it would still be hard to apply the allocation optimization due to internal MBTA politics, it would be significantly easier given the small amount of change that would be needed to get it working. With this in mind, the best candidate for a project to expand this study into the future would be **a system or service that the MBTA could actually use in practice to allocate buses based on historical and real-time data with derivative algorithms from this study.** We hope to pursue this as a research project next semester.
 
-##Data Sources 
+## Data Sources 
   
 We looked at a significant amount of data sets for this project, most of which were used in at least one of the optimizations we ended up doing. 
 
@@ -84,7 +84,7 @@ For modeling
  	- [x] Using Bus coordinate data & distance estimates (using coordinate distance/Route completion difference/Google Maps API), calcuate average speed + deviation and record corresponding average completion time of a route + deviation
 - [x] \*Note: Drop datapoints outside of current purview
 
-##To Run the Project
+## To Run the Project
 
 You can prepare your MongoDB instance by first starting `mongod` _without authentication_:
 ```
@@ -103,7 +103,7 @@ Your MongoDB instance should now be ready. Stop `mongod` and restart it, enablin
 mongod --auth --dbpath "<your_db_path>"
 ```
 
-####Installing Dependencies
+#### Installing Dependencies
 
 You will need the latest versions of the PROV and DML Python libraries. If you have `pip` installed, the following should install the latest versions automatically:
 ```
